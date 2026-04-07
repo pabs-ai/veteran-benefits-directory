@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>State Veterans Benefits Guide Directory</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-mid: #152340;
+    --navy-light: #1e3560;
+    --red: #c0392b;
+    --red-bright: #e74c3c;
+    --gold: #d4a017;
+    --gold-light: #f0c040;
+    --white: #f4f6fa;
+    --gray: #8a9bb5;
+    --card-bg: #111e35;
+    --border: rgba(212,160,23,0.25);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #060e1c 0%, #0f2040 50%, #14294d 100%);
+    border-bottom: 2px solid var(--gold);
+    padding: 48px 24px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '★';
+    position: absolute;
+    font-size: 400px;
+    color: rgba(255,255,255,0.02);
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .hero-flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .flag-stripe {
+    height: 4px;
+    width: 60px;
+    border-radius: 2px;
+  }
+  .flag-red { background: var(--red); }
+  .flag-white { background: #fff; }
+  .flag-star { color: var(--gold); font-size: 22px; }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  h1 span { color: var(--gold); }
+
+  .hero-sub {
+    margin-top: 12px;
+    color: var(--gray);
+    font-size: 15px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* FEDERAL BANNER */
+  .federal-banner {
+    background: linear-gradient(90deg, var(--red) 0%, #8b0000 100%);
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  .federal-banner strong {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .federal-banner a {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: background 0.2s;
+  }
+  .federal-banner a:hover { background: rgba(255,255,255,0.3); }
+
+  /* CONTROLS */
+  .controls {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 240px;
+    position: relative;
+  }
+  .search-wrap input {
+    width: 100%;
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 10px 16px 10px 40px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border 0.2s;
+  }
+  .search-wrap input:focus { border-color: var(--gold); }
+  .search-wrap::before {
+    content: '🔍';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    pointer-events: none;
+  }
+  .filter-btn {
+    background: var(--navy-mid);
+    border: 1px solid var(--border);
+    color: var(--gray);
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--navy-light);
+    border-color: var(--gold);
+    color: var(--gold-light);
+  }
+  .count {
+    color: var(--gray);
+    font-size: 13px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+  .count span { color: var(--gold); font-weight: 600; }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    padding: 0 24px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.4);
+    border-color: rgba(212,160,23,0.4);
+  }
+
+  .card-header {
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .state-abbr {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 1px;
+    min-width: 40px;
+    line-height: 1;
+  }
+  .state-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--white);
+    line-height: 1.2;
+  }
+  .dept-name {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 3px;
+    font-weight: 300;
+  }
+
+  .has-pdf-badge {
+    margin-left: auto;
+    background: var(--red);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .card-links {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 7px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    transition: background 0.15s;
+    border: 1px solid transparent;
+  }
+  .link-item:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+  .link-website { color: #7eb8f5; }
+  .link-pdf { color: #f5a97e; }
+  .link-icon { font-size: 14px; flex-shrink: 0; }
+  .link-text { flex: 1; }
+  .link-label {
+    font-size: 10px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+    line-height: 1;
+    margin-bottom: 1px;
+  }
+  .link-title { font-size: 12px; }
+
+  .no-pdf-note {
+    color: var(--gray);
+    font-size: 11px;
+    padding: 4px 10px;
+    font-style: italic;
+  }
+
+  /* HIDDEN */
+  .card.hidden { display: none; }
+
+  /* SECTION LABELS */
+  .section-label {
+    grid-column: 1 / -1;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    padding: 8px 0 4px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label span { color: var(--gold); }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--gray);
+    font-size: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  footer a { color: var(--gold-light); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-flag">
+    <div class="flag-stripe flag-red"></div>
+    <div class="flag-stripe flag-white"></div>
+    <span class="flag-star">★</span>
+    <div class="flag-stripe flag-white"></div>
+    <div class="flag-stripe flag-red"></div>
+  </div>
+  <h1>State Veterans<br><span>Benefits Guide</span> Directory</h1>
+  <p class="hero-sub">Official state Department of Veterans Affairs websites and PDF benefits guides for all 50 states + DC. Links marked <strong style="color:#e74c3c">PDF</strong> include downloadable guides.</p>
+</div>
+
+<div class="federal-banner">
+  <strong>📋 Federal Benefits Guide (All States)</strong>
+  <a href="https://department.va.gov/wp-content/uploads/2024/12/2025-Federal-Benefits-for-Veterans-Dependents-and-Survivors.pdf" target="_blank">⬇ Download 2025 Federal Guide PDF</a>
+  <a href="https://www.va.gov/" target="_blank">VA.gov</a>
+  <a href="https://www.military.com/benefits/veteran-state-benefits/state-veterans-benefits-directory.html" target="_blank">Military.com State Summary</a>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Search by state name or abbreviation…" oninput="filterCards()">
+  </div>
+  <button class="filter-btn active" onclick="filterBy('all', this)">All States</button>
+  <button class="filter-btn" onclick="filterBy('pdf', this)">Has PDF Guide</button>
+  <button class="filter-btn" onclick="filterBy('nopdf', this)">Website Only</button>
+  <div class="count">Showing <span id="countNum">51</span> of 51</div>
+</div>
+
+<div class="grid" id="stateGrid">
+
+  <!-- ALABAMA -->
+  <div class="card" data-state="alabama al" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">AL</div>
+      <div>
+        <div class="state-name">Alabama</div>
+        <div class="dept-name">Alabama Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://va.alabama.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">va.alabama.gov</span></div>
+      </a>
+      <p class="no-pdf-note">No statewide PDF guide — benefits info on website</p>
+    </div>
+  </div>
+
+  <!-- ALASKA -->
+  <div class="card" data-state="alaska ak" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">AK</div>
+      <div>
+        <div class="state-name">Alaska</div>
+        <div class="dept-name">Alaska Dept. of Military & Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.alaska.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.alaska.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- ARIZONA -->
+  <div class="card" data-state="arizona az" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">AZ</div>
+      <div>
+        <div class="state-name">Arizona</div>
+        <div class="dept-name">Arizona Dept. of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://dvs.az.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dvs.az.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- ARKANSAS -->
+  <div class="card" data-state="arkansas ar" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">AR</div>
+      <div>
+        <div class="state-name">Arkansas</div>
+        <div class="dept-name">Arkansas Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.veterans.arkansas.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.arkansas.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- CALIFORNIA -->
+  <div class="card" data-state="california ca" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">CA</div>
+      <div>
+        <div class="state-name">California</div>
+        <div class="dept-name">California Dept. of Veterans Affairs (CalVet)</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.calvet.ca.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">calvet.ca.gov</span></div>
+      </a>
+      <a href="https://www.calvet.ca.gov/VetServices/Pages/Benefits-and-Services.aspx" target="_blank" class="link-item link-website">
+        <span class="link-icon">📄</span>
+        <div class="link-text"><span class="link-label">Benefits Overview</span><span class="link-title">Benefits & Services Page</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- COLORADO -->
+  <div class="card" data-state="colorado co" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">CO</div>
+      <div>
+        <div class="state-name">Colorado</div>
+        <div class="dept-name">Colorado Division of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://cdvs.colorado.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">cdvs.colorado.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- CONNECTICUT -->
+  <div class="card" data-state="connecticut ct" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">CT</div>
+      <div>
+        <div class="state-name">Connecticut</div>
+        <div class="dept-name">CT Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://portal.ct.gov/DVA" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">portal.ct.gov/DVA</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- DELAWARE -->
+  <div class="card" data-state="delaware de" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">DE</div>
+      <div>
+        <div class="state-name">Delaware</div>
+        <div class="dept-name">Delaware Commission of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.delaware.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.delaware.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- DC -->
+  <div class="card" data-state="district of columbia dc washington" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">DC</div>
+      <div>
+        <div class="state-name">Dist. of Columbia</div>
+        <div class="dept-name">DC Office of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://ova.dc.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">ova.dc.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- FLORIDA -->
+  <div class="card" data-state="florida fl" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">FL</div>
+      <div>
+        <div class="state-name">Florida</div>
+        <div class="dept-name">FL Dept. of Veterans' Affairs (FDVA)</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://floridavets.org/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">FloridaVets.org</span></div>
+      </a>
+      <a href="https://floridavets.org/resources/va-benefits-guide/" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">PDF Guide</span><span class="link-title">2026 Florida Veterans' Benefits Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- GEORGIA -->
+  <div class="card" data-state="georgia ga" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">GA</div>
+      <div>
+        <div class="state-name">Georgia</div>
+        <div class="dept-name">Georgia Dept. of Veterans Service</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.georgia.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.georgia.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- HAWAII -->
+  <div class="card" data-state="hawaii hi" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">HI</div>
+      <div>
+        <div class="state-name">Hawaii</div>
+        <div class="dept-name">Hawaii Office of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://dod.hawaii.gov/ovs/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dod.hawaii.gov/ovs</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- IDAHO -->
+  <div class="card" data-state="idaho id" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">ID</div>
+      <div>
+        <div class="state-name">Idaho</div>
+        <div class="dept-name">Idaho Division of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.idaho.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.idaho.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- ILLINOIS -->
+  <div class="card" data-state="illinois il" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">IL</div>
+      <div>
+        <div class="state-name">Illinois</div>
+        <div class="dept-name">Illinois Dept. of Veterans' Affairs</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.illinois.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.illinois.gov</span></div>
+      </a>
+      <a href="https://veterans.illinois.gov/content/dam/soi/en/web/veterans/services-benefits/documents/benefits-guide.pdf" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">PDF Guide</span><span class="link-title">Illinois Veterans Benefits Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- INDIANA -->
+  <div class="card" data-state="indiana in" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">IN</div>
+      <div>
+        <div class="state-name">Indiana</div>
+        <div class="dept-name">Indiana Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.in.gov/dva/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">in.gov/dva</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- IOWA -->
+  <div class="card" data-state="iowa ia" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">IA</div>
+      <div>
+        <div class="state-name">Iowa</div>
+        <div class="dept-name">Iowa Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://va.iowa.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">va.iowa.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- KANSAS -->
+  <div class="card" data-state="kansas ks" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">KS</div>
+      <div>
+        <div class="state-name">Kansas</div>
+        <div class="dept-name">Kansas Office of Veterans Services</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://www.kovs.ks.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">kovs.ks.gov</span></div>
+      </a>
+      <a href="https://www.kovs.ks.gov/veteran-services/state-veterans-benefits-guide" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">Benefits Guide</span><span class="link-title">Kansas State Veterans Benefits Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- KENTUCKY -->
+  <div class="card" data-state="kentucky ky" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">KY</div>
+      <div>
+        <div class="state-name">Kentucky</div>
+        <div class="dept-name">Kentucky Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.ky.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.ky.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- LOUISIANA -->
+  <div class="card" data-state="louisiana la" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">LA</div>
+      <div>
+        <div class="state-name">Louisiana</div>
+        <div class="dept-name">Louisiana Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.ldva.la.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">ldva.la.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MAINE -->
+  <div class="card" data-state="maine me" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">ME</div>
+      <div>
+        <div class="state-name">Maine</div>
+        <div class="dept-name">Maine Bureau of Veterans' Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.maine.gov/dvem/bvs/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">maine.gov/dvem/bvs</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MARYLAND -->
+  <div class="card" data-state="maryland md" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MD</div>
+      <div>
+        <div class="state-name">Maryland</div>
+        <div class="dept-name">Maryland Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.maryland.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.maryland.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MASSACHUSETTS -->
+  <div class="card" data-state="massachusetts ma" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MA</div>
+      <div>
+        <div class="state-name">Massachusetts</div>
+        <div class="dept-name">MA Dept. of Veterans' Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.mass.gov/orgs/department-of-veterans-services" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">mass.gov DVS</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MICHIGAN -->
+  <div class="card" data-state="michigan mi" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MI</div>
+      <div>
+        <div class="state-name">Michigan</div>
+        <div class="dept-name">Michigan Dept. of Military & Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.michigan.gov/dmva" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">michigan.gov/dmva</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MINNESOTA -->
+  <div class="card" data-state="minnesota mn" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MN</div>
+      <div>
+        <div class="state-name">Minnesota</div>
+        <div class="dept-name">Minnesota Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://mn.gov/mdva/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">mn.gov/mdva</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MISSISSIPPI -->
+  <div class="card" data-state="mississippi ms" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MS</div>
+      <div>
+        <div class="state-name">Mississippi</div>
+        <div class="dept-name">Mississippi Veterans Affairs Board</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.vab.ms.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">vab.ms.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- MISSOURI -->
+  <div class="card" data-state="missouri mo" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">MO</div>
+      <div>
+        <div class="state-name">Missouri</div>
+        <div class="dept-name">Missouri Veterans Commission</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://mvc.dps.mo.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">mvc.dps.mo.gov</span></div>
+      </a>
+      <a href="https://mvc.dps.mo.gov/docs/veterans-benefits-guide.pdf" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">PDF Guide</span><span class="link-title">Missouri Veterans Benefits & Resources Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MONTANA -->
+  <div class="card" data-state="montana mt" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">MT</div>
+      <div>
+        <div class="state-name">Montana</div>
+        <div class="dept-name">Montana Dept. of Military Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://montanadma.org/montana-veterans-affairs" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">montanadma.org/veterans</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEBRASKA -->
+  <div class="card" data-state="nebraska ne" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NE</div>
+      <div>
+        <div class="state-name">Nebraska</div>
+        <div class="dept-name">Nebraska Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.nebraska.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.nebraska.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEVADA -->
+  <div class="card" data-state="nevada nv" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NV</div>
+      <div>
+        <div class="state-name">Nevada</div>
+        <div class="dept-name">Nevada Dept. of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.nv.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.nv.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEW HAMPSHIRE -->
+  <div class="card" data-state="new hampshire nh" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NH</div>
+      <div>
+        <div class="state-name">New Hampshire</div>
+        <div class="dept-name">NH State Veterans Council</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.nhveterans.org/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">nhveterans.org</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEW JERSEY -->
+  <div class="card" data-state="new jersey nj" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NJ</div>
+      <div>
+        <div class="state-name">New Jersey</div>
+        <div class="dept-name">NJ Dept. of Military & Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.nj.gov/military/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">nj.gov/military</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEW MEXICO -->
+  <div class="card" data-state="new mexico nm" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NM</div>
+      <div>
+        <div class="state-name">New Mexico</div>
+        <div class="dept-name">New Mexico Veterans Services Dept.</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.nvsd.nm.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">nvsd.nm.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NEW YORK -->
+  <div class="card" data-state="new york ny" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">NY</div>
+      <div>
+        <div class="state-name">New York</div>
+        <div class="dept-name">NY Div. of Veterans' Services</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.ny.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.ny.gov</span></div>
+      </a>
+      <a href="https://veterans.ny.gov/content/new-york-state-veterans-benefits-guide" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">Benefits Guide</span><span class="link-title">NY State Veterans Benefits Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- NORTH CAROLINA -->
+  <div class="card" data-state="north carolina nc" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">NC</div>
+      <div>
+        <div class="state-name">North Carolina</div>
+        <div class="dept-name">NC Dept. of Military & Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.milvets.nc.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">milvets.nc.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- NORTH DAKOTA -->
+  <div class="card" data-state="north dakota nd" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">ND</div>
+      <div>
+        <div class="state-name">North Dakota</div>
+        <div class="dept-name">ND Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.nd.gov/veterans/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">nd.gov/veterans</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- OHIO -->
+  <div class="card" data-state="ohio oh" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">OH</div>
+      <div>
+        <div class="state-name">Ohio</div>
+        <div class="dept-name">Ohio Dept. of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.ohio.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.ohio.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- OKLAHOMA -->
+  <div class="card" data-state="oklahoma ok" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">OK</div>
+      <div>
+        <div class="state-name">Oklahoma</div>
+        <div class="dept-name">Oklahoma Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.ok.gov/odva/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">ok.gov/odva</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- OREGON -->
+  <div class="card" data-state="oregon or" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">OR</div>
+      <div>
+        <div class="state-name">Oregon</div>
+        <div class="dept-name">Oregon Dept. of Veterans' Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.oregon.gov/odva/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">oregon.gov/odva</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- PENNSYLVANIA -->
+  <div class="card" data-state="pennsylvania pa" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">PA</div>
+      <div>
+        <div class="state-name">Pennsylvania</div>
+        <div class="dept-name">PA Dept. of Military & Veterans Affairs</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://www.dmva.pa.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dmva.pa.gov</span></div>
+      </a>
+      <a href="https://www.dmva.pa.gov/veterans/BenefitsandServices/Pages/default.aspx" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">Benefits Guide</span><span class="link-title">PA Veterans Benefits & Services</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- RHODE ISLAND -->
+  <div class="card" data-state="rhode island ri" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">RI</div>
+      <div>
+        <div class="state-name">Rhode Island</div>
+        <div class="dept-name">RI Office of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.ri.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.ri.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- SOUTH CAROLINA -->
+  <div class="card" data-state="south carolina sc" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">SC</div>
+      <div>
+        <div class="state-name">South Carolina</div>
+        <div class="dept-name">SC Dept. of Veterans' Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://va.sc.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">va.sc.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- SOUTH DAKOTA -->
+  <div class="card" data-state="south dakota sd" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">SD</div>
+      <div>
+        <div class="state-name">South Dakota</div>
+        <div class="dept-name">SD Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://vetaffairs.sd.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">vetaffairs.sd.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- TENNESSEE -->
+  <div class="card" data-state="tennessee tn" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">TN</div>
+      <div>
+        <div class="state-name">Tennessee</div>
+        <div class="dept-name">Tennessee Dept. of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.tn.gov/veteran.html" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">tn.gov/veteran</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- TEXAS -->
+  <div class="card" data-state="texas tx" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">TX</div>
+      <div>
+        <div class="state-name">Texas</div>
+        <div class="dept-name">Texas Veterans Commission (TVC)</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://www.tvc.texas.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">tvc.texas.gov</span></div>
+      </a>
+      <a href="https://www.tvc.texas.gov/benefits/state-benefits/" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">Benefits Guide</span><span class="link-title">Texas State Veterans Benefits</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- UTAH -->
+  <div class="card" data-state="utah ut" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">UT</div>
+      <div>
+        <div class="state-name">Utah</div>
+        <div class="dept-name">Utah Dept. of Veterans & Military Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.utah.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.utah.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- VERMONT -->
+  <div class="card" data-state="vermont vt" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">VT</div>
+      <div>
+        <div class="state-name">Vermont</div>
+        <div class="dept-name">Vermont Office of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.vermont.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.vermont.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- VIRGINIA -->
+  <div class="card" data-state="virginia va" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">VA</div>
+      <div>
+        <div class="state-name">Virginia</div>
+        <div class="dept-name">Virginia Dept. of Veterans Services</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.dvs.virginia.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dvs.virginia.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- WASHINGTON -->
+  <div class="card" data-state="washington wa" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">WA</div>
+      <div>
+        <div class="state-name">Washington</div>
+        <div class="dept-name">WA Dept. of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://www.dva.wa.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dva.wa.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- WEST VIRGINIA -->
+  <div class="card" data-state="west virginia wv" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">WV</div>
+      <div>
+        <div class="state-name">West Virginia</div>
+        <div class="dept-name">WV Division of Veterans Affairs</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://veterans.wv.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">veterans.wv.gov</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+  <!-- WISCONSIN -->
+  <div class="card" data-state="wisconsin wi" data-pdf="true">
+    <div class="card-header">
+      <div class="state-abbr">WI</div>
+      <div>
+        <div class="state-name">Wisconsin</div>
+        <div class="dept-name">Wisconsin Dept. of Veterans Affairs</div>
+      </div>
+      <span class="has-pdf-badge">PDF</span>
+    </div>
+    <div class="card-links">
+      <a href="https://dva.wi.gov/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">dva.wi.gov</span></div>
+      </a>
+      <a href="https://dva.wi.gov/Pages/VeteransBenefits/BenefitsGuide.aspx" target="_blank" class="link-item link-pdf">
+        <span class="link-icon">⬇</span>
+        <div class="link-text"><span class="link-label">Benefits Guide</span><span class="link-title">Wisconsin Veterans Benefits Guide</span></div>
+      </a>
+    </div>
+  </div>
+
+  <!-- WYOMING -->
+  <div class="card" data-state="wyoming wy" data-pdf="false">
+    <div class="card-header">
+      <div class="state-abbr">WY</div>
+      <div>
+        <div class="state-name">Wyoming</div>
+        <div class="dept-name">Wyoming Veterans Commission</div>
+      </div>
+    </div>
+    <div class="card-links">
+      <a href="https://wyomingveterans.org/" target="_blank" class="link-item link-website">
+        <span class="link-icon">🌐</span>
+        <div class="link-text"><span class="link-label">Official Website</span><span class="link-title">wyomingveterans.org</span></div>
+      </a>
+      <p class="no-pdf-note">Benefits info available on website</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Compiled for veteran transition support. Links connect to official state government websites. For updates or additions, verify at each state's official site.</p>
+  <p style="margin-top:8px">Federal Guide: <a href="https://department.va.gov/wp-content/uploads/2024/12/2025-Federal-Benefits-for-Veterans-Dependents-and-Survivors.pdf" target="_blank">2025 VA Federal Benefits for Veterans PDF</a> &nbsp;|&nbsp; <a href="https://www.va.gov/" target="_blank">VA.gov</a></p>
+</footer>
+
+<script>
+  let activeFilter = 'all';
+
+  function filterBy(type, btn) {
+    activeFilter = type;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilters();
+  }
+
+  function filterCards() {
+    applyFilters();
+  }
+
+  function applyFilters() {
+    const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    const cards = document.querySelectorAll('.card');
+    let visible = 0;
+    cards.forEach(card => {
+      const stateData = card.dataset.state || '';
+      const hasPdf = card.dataset.pdf === 'true';
+      const matchesSearch = !query || stateData.includes(query);
+      const matchesFilter =
+        activeFilter === 'all' ||
+        (activeFilter === 'pdf' && hasPdf) ||
+        (activeFilter === 'nopdf' && !hasPdf);
+      if (matchesSearch && matchesFilter) {
+        card.classList.remove('hidden');
+        visible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+    document.getElementById('countNum').textContent = visible;
+  }
+</script>
+</body>
+</html>
